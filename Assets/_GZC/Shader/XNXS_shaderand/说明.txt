@@ -1,0 +1,9 @@
+﻿压缩包里含有4个Shader和1个镜面脚本，2张贴图，1张CubeMap，分别为： 
+1.MGKJ_Base_1.02.shader，基本材质，场景默认所有物体都可以使用这个材质。 
+2.MGKJ_Cubemap_1.00.shader，带CubeMap反射的材质（假反射），应用在有反射的物体，如圆形的罐子等曲面物体，画框玻璃。 
+3.MGKJ_Glass_Base_1.00.shader,玻璃材质，表现窗户玻璃。 
+4.MGKJ_Mirror_Base_1.00.shader，镜面反射（真实反射），可以使用一张Normal图来表现粗糙的反射面。 
+5.MirrorReflection.cs，镜面反射脚本。有平面物体A，将MirrorReflection.cs挂载到A物体，给A物体MGKJ_Mirror_Base_1.00.shader，脚本能自动生成镜面反射贴图到材质球上。 
+6.Normalmap_512.tga,一张表现粗糙的Normap图（在Unity中将图片格式设置为Normap） 
+7.Nromal_map_flat.tga，一张平的Normap图（在Unity中将图片格式设置为Normap） 
+8.MyCubeMap.cubemap，一张室内的CubeMap；
