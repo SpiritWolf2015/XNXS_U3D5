@@ -66,7 +66,7 @@ Shader "虚拟现实/Base" {
 		//其中Input是我们自己定义的结构。Input结构中应该包含所需的纹理坐标(texture coordinates)和和表面函数(surfaceFunction)所需要的额外的必需变量。
 
 		#pragma surface surf BlinnPhong_wjm finalcolor:mycolor		
-		//#pragma multi_compile_fwdadd_fullshadows		// U3D5报错		
+//		#pragma multi_compile_fwdadd_fullshadows		// U3D5报错		
 		#pragma target 3.0
 		#pragma profileoption MaxTexIndirections=64
 
