@@ -23,12 +23,22 @@ public class MirrorReflection : MonoBehaviour {
 
     private static bool s_InsideRendering = false;
 
+    Renderer m_Renderer;
+    MonoBehaviour m_MonoBehaviour;
+    Transform m_Transform;
+
+    void Start ( ) {
+        m_Renderer = GetComponent<Renderer>( );
+        m_MonoBehaviour = this;
+        m_Transform = GetComponent<Transform>( );
+    }
+
     // This is called when it's known that the object will be rendered by some
     // camera. We render reflections and do other updates here.
     // Because the script executes in edit mode, reflections for the scene view
     // camera will just work!
     public void OnWillRenderObject ( ) {
-        if (!enabled || !GetComponent<Renderer>( ) || !GetComponent<Renderer>( ).sharedMaterial || !GetComponent<Renderer>( ).enabled)
+        if (!m_MonoBehaviour.enabled || !m_Renderer || !m_Renderer.sharedMaterial || !m_Renderer.enabled)
             return;
 
         Camera cam = Camera.current;
@@ -45,12 +55,12 @@ public class MirrorReflection : MonoBehaviour {
 
         // find out the reflection plane: position and normal in world space
         // ���淨�ߣ�X��=right��Y��=up��Z��=forward
-        Vector3 pos = transform.position;
-        Vector3 normal = transform.forward;
+        Vector3 pos = m_Transform.position;
+        Vector3 normal = m_Transform.forward;
         if (mirroraxes == NormalAxes.X)
-            normal = transform.right;
+            normal = m_Transform.right;
         if (mirroraxes == NormalAxes.Y)
-            normal = transform.up;
+            normal = m_Transform.up;
 
 
         // Optionally disable pixel lights for reflection
@@ -87,7 +97,7 @@ public class MirrorReflection : MonoBehaviour {
         reflectionCamera.Render( );
         reflectionCamera.transform.position = oldpos;
         GL.SetRevertBackfacing(false);
-        Material[ ] materials = GetComponent<Renderer>( ).sharedMaterials;
+        Material[ ] materials = this.m_Renderer.sharedMaterials;
         foreach (Material mat in materials) {
             if (mat.HasProperty("_ReflectionTex"))
                 mat.SetTexture("_ReflectionTex", m_ReflectionTexture);
@@ -175,7 +185,11 @@ public class MirrorReflection : MonoBehaviour {
             reflectionCamera.enabled = false;
             reflectionCamera.transform.position = transform.position;
             reflectionCamera.transform.rotation = transform.rotation;
+
+#if !UNITY_4_0
             reflectionCamera.gameObject.AddComponent<FlareLayer>( );
+#endif
+
             go.hideFlags = HideFlags.HideAndDontSave;
             m_ReflectionCameras[currentCamera] = reflectionCamera;
         }
