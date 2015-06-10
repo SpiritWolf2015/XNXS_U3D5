@@ -186,7 +186,7 @@ public class MirrorReflection : MonoBehaviour {
             reflectionCamera.transform.position = transform.position;
             reflectionCamera.transform.rotation = transform.rotation;
 
-#if !UNITY_4_0
+#if UNITY_5_0
             reflectionCamera.gameObject.AddComponent<FlareLayer>( );
 #endif
 
